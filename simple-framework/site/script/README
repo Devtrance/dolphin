@@ -1,0 +1,2 @@
+Place all the php actions in the correct files here.
+this files will be included befor sending the header();
