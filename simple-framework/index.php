@@ -96,7 +96,6 @@ ini_set('session.gc_maxlifetime', $garbage_timeout);
 // http://de.php.net/manual/en/session.configuration.php#ini.session.gc-probability
 ini_set('session.gc_probability',10); // 100 = everytime = 100%
 
-session_save_path(TMP_DIR.'/session');
 session_set_cookie_params(SESSION_LIFETIME);
 session_name(SESSION_NAME);
 session_start();
