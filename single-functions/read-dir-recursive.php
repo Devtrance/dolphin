@@ -1,7 +1,7 @@
 <?php
 /**
  *  dolphin. Collection of usefull PHP skeletons.
- *  Copyright (C) 2009  Johannes 'Banana' Keßler
+ *  Copyright (C) 2010  Johannes 'Banana' Keßler
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,19 +18,26 @@
  */
 
 /**
- * create a random A-Z 0-9 string with the given length
- * @author banana mail@bananas-playground.net
- * @param string $lentgh Default 5
- * @return string The random string
- */
-function randomAZ09($length=5) {
-	$str = '';
-	for ($i=0; $i<$length; $i++) {
-		$d = rand(1,30)%2;
-		$str .= $d ? chr(rand(65,90)) : chr(rand(48,57));
+* return recursive all data from the given directory
+* @author banana mail@bananas-playground.net
+* @param string $directory The directory to read
+* @return array $files
+*/
+function getSubFiles($directory) {
+	$files = array();
+
+	$dh = opendir($directory);
+	while(false !== ($file = readdir($dh))) {
+		if($file[0] ==".") continue;
+
+		if(is_file($directory."/".$file)) {
+			array_push($files, $directory."/".$file);
+		}
+		else {
+			$files = array_merge($files, getSubFiles($directory."/".$file));
+		}
 	}
-
-	return $str;
+	closedir($dh);
+	return $files;
 }
-
 ?>
