@@ -1,0 +1,12 @@
+A simple Script to manage your Bookmarks without any third-party hoster eg. xmarks, apple etc.
+
+All you need is this script a MySQL Database and one table in it.
+
+Create your own subdomain and protect it with the htaccess file and your can now access and manage
+your Bookmarks everywhere.
+
+Independent to a browser or location.
+
+AND your data is where YOU know. Not in a cloud without security. You control it and decide where and who has access.
+
+copyright 2010 Johannes 'Banana' Keßler
