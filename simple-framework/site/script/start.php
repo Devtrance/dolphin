@@ -1,7 +1,7 @@
 <?php
 
 /**
-* dolphin. Collection of usefull PHP skeletons.
+* dolphin. Collection of useful PHP skeletons.
 * Copyright (C) 2009 Johannes 'Banana' Keßler
 *
 * This program is free software: you can redistribute it and/or modify

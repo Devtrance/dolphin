@@ -2,9 +2,9 @@ This is a very simple but yet working framework.
 Using smarty as template management
 
 All requests are going with the $_GET variable.
-The values are checked and validated. If successfull the right php and template file will be loaded.
+The values are checked and validated. If successful the right php and template file will be loaded.
 
-eg.
+e.g.
 index.php?p=start
 
 will load the start.php and start.html file as template and display all via the main.html file 

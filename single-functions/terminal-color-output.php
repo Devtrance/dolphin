@@ -1,6 +1,6 @@
 <?php 
 /**
- *  dolphin. Collection of usefull PHP skeletons.
+ *  dolphin. Collection of useful PHP skeletons.
  *  Copyright (C) 2011  Johannes 'Banana' Keßler
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@
  * @param string $string The text to be colored
  * @param string $col The text color
  * @param string $bcol The background color. Default is not set
- * @param string $ret The formated ( or not ) text
+ * @param string $ret The formatted ( or not ) text
  */
 function cO($string,$col,$bcol=false) {
 	$ret = false;

@@ -1,6 +1,6 @@
 <?php
 /**
- *  dolphin. Collection of usefull PHP skeletons.
+ *  dolphin. Collection of useful PHP skeletons.
  *  Copyright (C) 2009  Johannes 'Banana' Keßler
  *
  * This program is free software: you can redistribute it and/or modify
@@ -13,7 +13,7 @@
 
 /**
  * validate if given string is correct
- * this can easily exapnded with more match patterns
+ * this can easily expanded with more match patterns
  *
  * @param string $string
  * @param string $mode

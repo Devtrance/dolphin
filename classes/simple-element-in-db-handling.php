@@ -1,6 +1,6 @@
 <?php
 /**
- *  dolphin. Collection of usefull PHP skeletons.
+ *  dolphin. Collection of useful PHP skeletons.
  *  Copyright (C) 2009  Johannes 'Banana' Keßler
  *
  * This program is free software: you can redistribute it and/or modify
@@ -122,7 +122,7 @@ class simpleClass { # rename the class
 
 	/**
 	 * get the complete mandant list from the database
-	 * the elements have a status which indecates the following:
+	 * the elements have a status which indicates the following:
 	 * 0= inactive
 	 * 1= active and ready to use
 	 * 2= hidden
