@@ -28,12 +28,37 @@ if(isset($_POST['sub']['submitNew'])) {
 	$title = trim($_POST['new']['title']);
 	$cat = trim($_POST['new']['category']);
 	if(!empty($link) && !empty($title) && !empty($cat)) {
-		$query = mysql_query("INSERT INTO `bookmarks` 
-								SET `category` = '".mysql_escape_string($cat)."',
-									`title` = '".mysql_escape_string($title)."',
-									`link` = '".mysql_escape_string($link)."',
-									`date_added` = '".time()."'");
+		$mir = '0';
+		if(isset($_POST['new']['mirror']) && $_POST['new']['mirror'] == "yes") {
+			$mir = '1';
+		}
+			$query = mysql_query("INSERT INTO `bookmarks` 
+									SET `category` = '".mysql_real_escape_string($cat)."',
+										`title` = '".mysql_real_escape_string($title)."',
+										`link` = '".mysql_real_escape_string($link)."',
+										`date_added` = '".time()."',
+										`mirror` = '".mysql_real_escape_string($mir)."'");
 		if($query !== false) {
+			if($mir === "1") {
+				// we want a mirror
+				$insertID = mysql_insert_id();
+				if(!empty($insertID)) {
+					$postfields['link'] = $link;
+					$postfields['saveTo'] = $insertID;
+					// do the curl call to trigger the mirror creation
+					# this way "avaoid" any wayting time
+					$ch = curl_init("http://www.tld.de/createMirror.php");
+					curl_setopt($ch, CURLOPT_POST, 1); // we use POST
+					curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
+					curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0");
+					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+					# use this if you protect the script with htaccess
+					curl_setopt($ch, CURLOPT_USERPWD, 'username:password');
+					$cResult = curl_exec($ch);
+					curl_close($ch);
+				}
+			}
+			
 			header("Location: index.php");
 		}
 		else {
@@ -100,6 +125,8 @@ if(mysql_num_rows($query) > 0) {
 		<input type="text" name="new[title]" value="" size="60" /><br />
 		Kategorie:<br />
 		<input type="text" name="new[category]" value="" size="60" /><br />
+		<br />
+		<input type="checkbox" name="new[mirror]" value="yes" /> Httrack Mirror anlegen.<br />
 		<button type="submit" title="Speichern" name="sub[submitNew]">Speichern</button>
 	</form>
 	<?php
@@ -114,7 +141,11 @@ if(mysql_num_rows($query) > 0) {
 				echo '<ul>';
 				$cat = $entry['category'];
 			}
-			echo '<li><a href="'.$entry['link'].'">'.$entry['title'].'</a> | <a href="index.php?edit='.$entry['id'].'" title="edit"><img src="edit.png" width="16" alt="edit" /></a></li>';
+			echo '<li><a href="'.$entry['link'].'">'.$entry['title'].'</a>';
+			if($entry['mirror'] == "1") {
+				echo ' | <a href="http://www.bananas-development-server.de/bookmarkMirror/'.$entry['id'].'/">mirror</a>';
+			}
+			echo ' | <a href="index.php?edit='.$entry['id'].'" title="edit"><img src="edit.png" width="16" alt="edit" /></a></li>';
 		}
 		echo '</ul>';
 	}
