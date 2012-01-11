@@ -12,39 +12,79 @@
  */
 
 /**
- * validate if given string is correct
- * this can easily expanded with more match patterns
+ * validate the given string with the given type. Optional check the string
+ * length
  *
- * @param string $string
- * @param string $mode
+ * @param string $input The string to check
+ * @param string $mode How the string should be checked
+ * @param mixed $limit If int given the string is checked for length
+ *
+ * @see http://de.php.net/manual/en/regexp.reference.unicode.php
+ * http://www.sql-und-xml.de/unicode-database/#pc
+ *
+ * the pattern replaces all that is allowed. the correct result after
+ * the replace should be empty, otherwise are there chars which are not
+ * allowed
+ *
  */
- function validateInput($string,$mode) {
+ function validate($input,$mode='text',$limit=false) {
+	// check if we have input
+	$input = trim($input);
+
+	if($input == "") return false;
+
 	$ret = false;
-    if(!empty($string) && !empty($mode)) {
-		switch ($mode) {
-			case 'nospace':
-				$pattern = '/[^\p{L}\p{N}\p{P}]/u';
-				$value = preg_replace($pattern, '', $string);
-				if($string === $value) {
-					$ret = true;
-				}
-			break;
-			case 'digit':
-				$pattern = '/[^\p{N}]/u';
-				$value = preg_replace($pattern, '', $string);
-				if($string === $value) {
-					$ret = true;
-				}
-			break;
-    		case 'text':
-				$pattern = '/[^\p{L}\p{N}\p{P}]/u';
-				$value = preg_replace($pattern, '', $string);
-				if($string === $value) {
-					$ret = true;
-				}
-			break;
+
+	switch ($mode) {
+		case 'mail':
+			return self::check_email_address($input);
+		break;
+
+		case 'url':
+			return filter_var($input,FILTER_VALIDATE_URL);
+		break;
+
+		case 'nospace':
+			// text without any whitespace and special chars
+			$pattern = '/[\p{L}\p{N}]/u';
+		break;
+
+		case 'nospaceP':
+			// text without any whitespace and special chars
+			// but with Punctuation
+			$pattern = '/[\p{L}\p{N}\p{Po}]/u';
+		break;
+
+		case 'digit':
+			// only numbers and digit
+	  		$pattern = '/[\p{Nd}]/';
+		break;
+
+		case 'pageTitle':
+			// text with whitespace and without special chars
+			// but with Punctuation
+			$pattern = '/[\p{L}\p{N}\p{Po}\p{Z}\s]/u';
+		break;
+
+		case 'text':
+		default:
+			$pattern = '/[\p{L}\p{N}\p{P}\p{S}\p{Z}\p{M}\s]/u';
+	}
+
+	$value = preg_replace($pattern, '', $input);
+	#if($input === $value) {
+	if($value === "") {
+		$ret = true;
+	}
+
+	if(!empty($limit)) {
+		# isset starts with 0
+		if(isset($input[$limit])) {
+			# too long
+			$ret = false;
 		}
-    }
-    return $ret;
+	}
+
+	return $ret;
 }
 ?>
