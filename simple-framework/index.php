@@ -31,14 +31,13 @@ require(PATH_LIB.'/function.library.php');
  * set the error reporting
  */
 if(DEBUG === true) {
-	ini_set('error_reporting',8191); // E_ALL & E_STRICT
+	ini_set('error_reporting',-1); // E_ALL & E_STRICT
 	ini_set('display_errors',true);
 }
 else {
-	ini_set('error_reporting',8191); // E_ALL & E_STRICT
+	ini_set('error_reporting',-1); // E_ALL & E_STRICT
 	ini_set('display_errors',false);
 	ini_set('log_errors',true);
-	ini_set('log_errors_max_len',"10M");
 	ini_set('error_log',TMP_DIR.'/error/error.file');
 }
 
@@ -71,9 +70,9 @@ else {
 require_once(PATH_LIB.'/smarty/Smarty.class.php');
 $smarty = new Smarty();
 $smarty->caching = 0;
-$smarty->template_dir = 'site/template';
-$smarty->compile_dir = 'site/cache/';
-$smarty->cache_dir = 'site/cache/';
+$smarty->setTemplateDir('site/template');
+$smarty->setCompileDir('site/cache/');
+$smarty->setCacheDir('site/cache/');
 
 /**
  * start a session
