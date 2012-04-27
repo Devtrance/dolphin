@@ -14,7 +14,7 @@
 /**
  * convert given bytes into human readable string
  * @author banana mail@bananas-playground.net
- * @author the_gil http://www.reddit.com/user/the_gil
+ * @author Guillaume Amringer g.amringer@gmail.com
  *
  * @param int $amount Bytes
  * @param string $unit
